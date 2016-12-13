@@ -1,5 +1,6 @@
 import gym
 from universe import envs, spaces
+from universe.vectorized import core
 from universe.wrappers import gym_core_sync
 
 from universe.wrappers.action_space import SafeActionSpace
@@ -16,7 +17,7 @@ from universe.wrappers.vectorize import Vectorize, Unvectorize, WeakUnvectorize
 from universe.wrappers.vision import Vision
 
 def wrap(env):
-    return Timer(Render(Throttle(env)))
+    return core.MonitorWrapper(Timer(Render(Throttle(env))))
 
 def WrappedVNCEnv():
     return wrap(envs.VNCEnv())

@@ -4,10 +4,12 @@ import os
 import gym.monitoring
 from gym.monitoring.tests import helpers
 from universe import wrappers
+from universe.vectorized.core import MonitorWrapper
 
 def test_multiprocessing_env_monitoring():
     with helpers.tempdir() as temp:
-        env = wrappers.WrappedMultiprocessingEnv('Pong-v3')
+        # Need to explicitly wrap with MonitorWrapper because we're not calling make()
+        env = MonitorWrapper(wrappers.WrappedMultiprocessingEnv('Pong-v3'))
         env.configure(n=2)
         env.monitor.start(temp)
         env.reset()

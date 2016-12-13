@@ -4,11 +4,14 @@ from universe import error
 
 class Env(gym.Env):
     metadata = {
-        'runtime.vectorized': True
+        'runtime.vectorized': True,
     }
 
     # User should set this!
     n = None
+    # We don't want to be wrapped by gym's MonitorWrapper wrapper in make(). 
+    # We use our own version.
+    monitor_wrapper_friendly = False
 
     @property
     def monitor(self):
@@ -65,4 +68,7 @@ class RewardWrapper(Wrapper, gym.RewardWrapper):
     pass
 
 class ActionWrapper(Wrapper, gym.ActionWrapper):
+    pass
+
+class MonitorWrapper(Wrapper, gym.MonitorWrapper):
     pass
